@@ -1,2 +1,2 @@
 # shorty
-Simple URL shortner in Haskell
+Simple URL shortener in Haskell
