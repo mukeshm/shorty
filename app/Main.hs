@@ -4,9 +4,12 @@ module Main where
 
 import Web.Scotty
 import Network.Wai.Middleware.RequestLogger
-import Network.HTTP.Types (status301)
+import Network.HTTP.Types (status301, status400)
 import System.Random (randomRIO)
 import Control.Monad (replicateM)
+import Network.URI (URI, parseURI)
+import qualified Data.Text.Lazy as TL
+import Control.Monad.IO.Class (liftIO)
 
 -- list of unique chars
 alphaNum :: String
@@ -43,11 +46,19 @@ redirectURL =  get "/:code" $ do
 -- URL shortner api endpoint
 shortenURL :: ScottyM ()
 shortenURL = post "/url" $ do
-    -- get form data
-    -- get the url
+    uri <- param "uri"
+    let parsedURI :: Maybe URI
+        parsedURI = parseURI (TL.unpack uri)
+    case parsedURI of
+      Just _ -> do
+        shortCode <- liftIO generateCode
+        html $ TL.pack shortCode
+      Nothing -> do
+        status status400
+        html "Invalid URL"
     -- shorten and dump to db
     -- send back the short url
-    html "Got shorten request"
+    
 
 -- handle all other routes
 allOtherRoutes :: ScottyM ()
