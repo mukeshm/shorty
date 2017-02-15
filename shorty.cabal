@@ -11,6 +11,7 @@ copyright:           2017 Mukesh M
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
+data-files:          templates/*.html
 cabal-version:       >=1.10
 
 executable shorty
@@ -20,6 +21,8 @@ executable shorty
   build-depends:       base
                      , scotty
                      , wai-extra
+                     , http-types
+                     , random
   default-language:    Haskell2010
 
 source-repository head
