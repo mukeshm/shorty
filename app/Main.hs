@@ -9,7 +9,7 @@ import System.Random (randomRIO)
 import Control.Monad (replicateM)
 import Network.URI (URI, parseURI)
 import qualified Data.Text.Lazy as TL
-import qualified Data.ByteString as BS
+import qualified Data.ByteString.Char8 as BS
 import Control.Monad.IO.Class (liftIO)
 import qualified Database.Redis as R
 import Data.Text.Encoding (decodeUtf8, encodeUtf8)
@@ -18,6 +18,12 @@ getURL  :: R.Connection
         -> BS.ByteString
         -> IO (Either R.Reply (Maybe BS.ByteString))
 getURL conn shortCode = R.runRedis conn $ R.get shortCode
+
+saveURI :: R.Connection
+        -> BS.ByteString
+        -> BS.ByteString
+        -> IO (Either R.Reply R.Status)
+saveURI conn shortCode url = R.runRedis conn $ R.set shortCode url
 
 -- list of unique chars
 alphaNum :: String
@@ -71,13 +77,15 @@ shortenURL conn = post "/url" $ do
     case parsedURI of
       Just _ -> do
         shortCode <- liftIO generateCode
-        html $ TL.pack shortCode
+        let shorty = BS.pack shortCode
+            uri' = encodeUtf8 (TL.toStrict uri)
+        resp <- liftIO (saveURI conn shorty uri')
+        case resp of
+          Left reply -> text (TL.pack (show reply))
+          Right status -> html $ TL.pack shortCode
       Nothing -> do
         status status404
         html "Invalid URL"
-    -- shorten and dump to db
-    -- send back the short url
-    
 
 -- handle all other routes
 allOtherRoutes :: ScottyM ()
