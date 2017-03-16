@@ -4,12 +4,20 @@ module Main where
 
 import Web.Scotty
 import Network.Wai.Middleware.RequestLogger
-import Network.HTTP.Types (status301, status400)
+import Network.HTTP.Types (status301, status404)
 import System.Random (randomRIO)
 import Control.Monad (replicateM)
 import Network.URI (URI, parseURI)
 import qualified Data.Text.Lazy as TL
+import qualified Data.ByteString as BS
 import Control.Monad.IO.Class (liftIO)
+import qualified Database.Redis as R
+import Data.Text.Encoding (decodeUtf8, encodeUtf8)
+
+getURL  :: R.Connection
+        -> BS.ByteString
+        -> IO (Either R.Reply (Maybe BS.ByteString))
+getURL conn shortCode = R.runRedis conn $ R.get shortCode
 
 -- list of unique chars
 alphaNum :: String
@@ -36,16 +44,27 @@ serveMain :: ScottyM ()
 serveMain = get "/" $ file "./templates/index.html"
 
 -- redirect short codes
-redirectURL :: ScottyM ()
-redirectURL =  get "/:code" $ do
-  -- get a url for short code if present
-  -- else return 404
-  status status301
-  addHeader  "Location" "http://www.geekskool.com"
+redirectURL :: R.Connection -> ScottyM ()
+redirectURL conn =  get "/:code" $ do
+  code <- param "code"
+  eitherURL <- liftIO (getURL conn code)
+  case eitherURL of
+    Left reply -> do
+      text (TL.pack (show reply))
+    Right maybeURL -> case maybeURL of
+      Nothing -> do
+        status status404
+        html "Invalid URL"
+      Just url -> do
+        status status301
+        addHeader  "Location" (bsToText url)
+
+bsToText :: BS.ByteString -> TL.Text
+bsToText bs = TL.fromStrict (decodeUtf8 bs)
 
 -- URL shortner api endpoint
-shortenURL :: ScottyM ()
-shortenURL = post "/url" $ do
+shortenURL :: R.Connection -> ScottyM ()
+shortenURL conn = post "/url" $ do
     uri <- param "uri"
     let parsedURI :: Maybe URI
         parsedURI = parseURI (TL.unpack uri)
@@ -54,7 +73,7 @@ shortenURL = post "/url" $ do
         shortCode <- liftIO generateCode
         html $ TL.pack shortCode
       Nothing -> do
-        status status400
+        status status404
         html "Invalid URL"
     -- shorten and dump to db
     -- send back the short url
@@ -65,14 +84,16 @@ allOtherRoutes :: ScottyM ()
 allOtherRoutes = notFound $ do
   html "Not Found"
 
-app :: ScottyM ()
-app = do
+app :: R.Connection ->  ScottyM ()
+app conn = do
   devLogger
   serveMain
-  redirectURL
-  shortenURL
+  redirectURL conn
+  shortenURL conn
   allOtherRoutes
 
 main :: IO ()
-main = scotty 8080 app
+main = do
+  rConn <- R.checkedConnect R.defaultConnectInfo 
+  scotty 8080 (app rConn)
 
