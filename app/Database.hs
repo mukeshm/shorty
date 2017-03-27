@@ -11,8 +11,10 @@ import qualified Database.Redis as R
 getDBConnection :: R.ConnectInfo -> IO R.Connection
 getDBConnection ci = R.checkedConnect ci
 
-connectionInfo :: R.ConnectInfo
-connectionInfo = R.defaultConnectInfo
+connectionInfo :: String -> String -> R.ConnectInfo
+connectionInfo host port = R.defaultConnectInfo
+                           { R.connectHost = host
+                           , R.connectPort = R.Service port}
 
 getURL  :: R.Connection
         -> BS.ByteString
