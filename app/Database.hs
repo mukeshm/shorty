@@ -1,7 +1,18 @@
-module Database (getURL, saveURL) where
+module Database (
+  getURL
+  , saveURL
+  , getDBConnection
+  , connectionInfo
+  ) where
 
 import qualified Data.ByteString.Char8 as BS
 import qualified Database.Redis as R
+
+getDBConnection :: R.ConnectInfo -> IO R.Connection
+getDBConnection ci = R.checkedConnect ci
+
+connectionInfo :: R.ConnectInfo
+connectionInfo = R.defaultConnectInfo
 
 getURL  :: R.Connection
         -> BS.ByteString
