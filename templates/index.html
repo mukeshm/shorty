@@ -12,10 +12,13 @@
          var domain = document.domain,
              url = document.getElementById("urlField").value,
              urlRegex = /(http)s?/;
-         if(urlRegex.test(url) === true) {
-           console.log(url, domain);
+         if(url === '') {
+           alert("Invalid url")
          } else {
-           alert("Enter valid url");
+           if(urlRegex.test(url) === false) {
+             url = 'http' + url;
+           }
+           console.log(domain, url) 
          }
        }
      </script>
