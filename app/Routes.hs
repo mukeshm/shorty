@@ -12,6 +12,7 @@ import Control.Monad.IO.Class (liftIO)
 import qualified Database.Redis as R
 import Data.Text.Encoding (decodeUtf8, encodeUtf8)
 import Database (getURL, saveURL)
+import System.FilePath.Posix ((</>))
 import Web.Scotty (ScottyM
                   , html
                   , notFound
@@ -43,8 +44,8 @@ generateCode :: IO String
 generateCode = replicateM 7 (randomChar alphaNum)
 
 -- serve main page
-serveMain :: ScottyM ()
-serveMain = get "/" $ file "./templates/index.html"
+serveMain :: FilePath -> ScottyM ()
+serveMain tPath = get "/" $ file (tPath </> "index.html")
 
 -- redirect short codes
 redirectURL :: R.Connection -> ScottyM ()
@@ -86,9 +87,9 @@ allOtherRoutes :: ScottyM ()
 allOtherRoutes = notFound $ do
   html "Not Found"
 
-routes :: R.Connection ->  ScottyM ()
-routes conn = do
-  serveMain
+routes :: R.Connection -> String -> ScottyM ()
+routes conn templatePath = do
+  serveMain templatePath
   redirectURL conn
   shortenURL conn
   allOtherRoutes
