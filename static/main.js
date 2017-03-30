@@ -31,7 +31,7 @@ function shortenUrl() {
     var data = "uri=" + url + "&domain=" + domain
     postRequest(data, function(err, resData) {
       if (err) alert(err.errorText)
-      else alert(resData.shortURL)
+      else document.getElementById("shortenedUrl").innerHTML = resData.shortURL
     })
     document.getElementById("urlForm").className = "hide";
     document.getElementById("shortUrl").className = "display";
