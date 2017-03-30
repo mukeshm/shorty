@@ -9,10 +9,11 @@
      <script>
       document.getElementById("subButton").addEventListener("click", test);
        function test() {
-         var url = document.getElementById("urlField").value;
-         var urlRegex = /(http)s?/;
+         var domain = document.domain,
+             url = document.getElementById("urlField").value,
+             urlRegex = /(http)s?/;
          if(urlRegex.test(url) === true) {
-           console.log(url);
+           console.log(url, domain);
          } else {
            alert("Enter valid url");
          }
