@@ -13,16 +13,13 @@ import qualified Database.Redis as R
 import Data.Text.Encoding (decodeUtf8, encodeUtf8)
 import Database (getURL, saveURL)
 import System.FilePath.Posix ((</>))
+import Types (ShortURL(..))
 import Web.Scotty (ScottyM
-                  , html
-                  , notFound
-                  , status
-                  , param
-                  , post
-                  , get
-                  , addHeader
-                  , text
-                  , file)
+                  , html, notFound
+                  , status, param
+                  , post, get
+                  , addHeader, text
+                  , file, json)
 
 -- list of unique chars
 alphaNum :: String
@@ -85,7 +82,7 @@ shortenURL conn = post "/url" $ do
         resp <- liftIO (saveURL conn shorty uri')
         case resp of
           Left reply -> text (TL.pack (show reply))
-          Right status -> html $ TL.pack (createShortUrl domain shortCode)
+          Right status -> json $ ShortURL (createShortUrl domain shortCode)
       Nothing -> do
         status status404
         html "Invalid URL"
