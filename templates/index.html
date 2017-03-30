@@ -10,7 +10,12 @@
       document.getElementById("subButton").addEventListener("click", test);
        function test() {
          var url = document.getElementById("urlField").value;
-         console.log(url);
+         var urlRegex = /(http)s?/;
+         if(urlRegex.test(url) === true) {
+           console.log(url);
+         } else {
+           alert("Enter valid url");
+         }
        }
      </script>
   </body>
