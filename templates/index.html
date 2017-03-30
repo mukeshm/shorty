@@ -7,9 +7,22 @@
      <input type="text" name="" value="" id="urlField">
      <button type="button" name="button" id="subButton">Shorten</button>
      <script>
-      document.getElementById("subButton").addEventListener("click", test);
+       document.getElementById("subButton").addEventListener("click", test);
+       function postRequest(data, cb) {
+         var xhr = new XMLHttpRequest();
+         xhr.open('POST', "/url", true);
+         xhr.setRequestHeader('Content-Type', 'application/json')
+         xhr.send(JSON.stringify(data));
+         xhr.onreadystatechange = processRequest;
+         function processRequest(e) {
+           if (xhr.readyState == 4 && xhr.status == 200) {
+             var resData = JSON.parse(xhr.responseText);
+             cb(resData);
+           }
+         }
+       }
        function test() {
-         var domain = document.domain,
+         var domain = window.location.href,
              url = document.getElementById("urlField").value,
              urlRegex = /(http)s?/;
          if(url === '') {
@@ -18,9 +31,16 @@
            if(urlRegex.test(url) === false) {
              url = 'http' + url;
            }
-           console.log(domain, url) 
+           var data = {
+             uri: url,
+             domain: domain
+           }
+           postRequest(data, function(resData) {
+             alert(resData)
+           })
          }
        }
+
      </script>
   </body>
 </html>
