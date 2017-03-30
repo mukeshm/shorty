@@ -5,7 +5,7 @@ module Routes (routes) where
 import Network.HTTP.Types (status301, status404)
 import System.Random (randomRIO)
 import Control.Monad (replicateM)
-import Network.URI (URI, parseURI)
+import Network.URI (URI, parseURI, uriToString, parseRelativeReference, relativeTo)
 import qualified Data.Text.Lazy as TL
 import qualified Data.ByteString.Char8 as BS
 import Control.Monad.IO.Class (liftIO)
@@ -63,10 +63,18 @@ redirectURL conn =  get "/:code" $ do
         status status301
         addHeader  "Location" (bsToText url)
 
+createShortUrl :: String -> String -> String
+createShortUrl d s = let sc = parseRelativeReference s
+                         dom = parseURI d
+                     in case (relativeTo <$> sc <*> dom) of
+                          Nothing -> "Invalid Domain"
+                          Just uri -> uriToString id uri ""
+
 -- URL shortner api endpoint
 shortenURL :: R.Connection -> ScottyM ()
 shortenURL conn = post "/url" $ do
     uri <- param "uri"
+    domain <- param "domain"
     let parsedURI :: Maybe URI
         parsedURI = parseURI (TL.unpack uri)
     case parsedURI of
@@ -77,7 +85,7 @@ shortenURL conn = post "/url" $ do
         resp <- liftIO (saveURL conn shorty uri')
         case resp of
           Left reply -> text (TL.pack (show reply))
-          Right status -> html $ TL.pack shortCode
+          Right status -> html $ TL.pack (createShortUrl domain shortCode)
       Nothing -> do
         status status404
         html "Invalid URL"
