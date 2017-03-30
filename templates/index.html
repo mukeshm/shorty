@@ -2,46 +2,17 @@
 <html>
   <head>
     <title>Shorty</title>
+    <link rel="stylesheet" href="main.css">
   </head>
   <body>
-     <input type="text" name="" value="" id="urlField">
-     <button type="button" name="button" id="subButton">Shorten</button>
-     <script>
-       document.getElementById("subButton").addEventListener("click", test);
-       function postRequest(data, cb) {
-         var xhr = new XMLHttpRequest();
-         xhr.open('POST', "/url", true);
-         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-         xhr.send(data);
-         xhr.onreadystatechange = processRequest;
-         function processRequest(e) {
-           if (xhr.readyState == 4 && xhr.status == 200) {
-             var resData = JSON.parse(xhr.responseText);
-             cb(null, resData);
-           } else if(xhr.readyState == 4) {
-             var resData = JSON.parse(xhr.responseText);
-             cb(resData);
-           }
-         }
-       }
-       function test() {
-         var domain = window.location.href,
-             url = document.getElementById("urlField").value,
-             urlRegex = /(http)s?/;
-         if(url === '') {
-           alert("Invalid url")
-         } else {
-           if(urlRegex.test(url) === false) {
-             url = 'http' + url;
-           }
-           var data = "uri=" + url + "&domain=" + domain
-           postRequest(data, function(err, resData) {
-             if (err) alert(err.errorText)
-             else alert(resData.shortURL)
-           })
-         }
-       }
-
-     </script>
+     <div id="urlForm">
+       <input type="text" name="" value="" id="urlField">
+       <button type="button" name="button" id="subButton">Shorten</button>
+     </div>
+     <div id="shortUrl" class="urlBlock">
+       <p>Shortened URL</p>
+       <button type="button" name="button" id="closeButton">Close</button>
+     </div>
+     <script src="main.js"></script>
   </body>
 </html>
