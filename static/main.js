@@ -33,9 +33,9 @@ function shortenUrl() {
       if (err) alert(err.errorText)
       else alert(resData.shortURL)
     })
+    document.getElementById("urlForm").className = "hide";
+    document.getElementById("shortUrl").className = "display";
   }
-  document.getElementById("urlForm").className = "hide";
-  document.getElementById("shortUrl").className = "display";
 }
 
 function urlForm() {
