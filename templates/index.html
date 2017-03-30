@@ -11,8 +11,8 @@
        function postRequest(data, cb) {
          var xhr = new XMLHttpRequest();
          xhr.open('POST', "/url", true);
-         xhr.setRequestHeader('Content-Type', 'application/json')
-         xhr.send(JSON.stringify(data));
+         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+         xhr.send(data);
          xhr.onreadystatechange = processRequest;
          function processRequest(e) {
            if (xhr.readyState == 4 && xhr.status == 200) {
@@ -31,10 +31,7 @@
            if(urlRegex.test(url) === false) {
              url = 'http' + url;
            }
-           var data = {
-             uri: url,
-             domain: domain
-           }
+           var data = "uri=" + url + "&domain=" + domain
            postRequest(data, function(resData) {
              alert(resData)
            })
