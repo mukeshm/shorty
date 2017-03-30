@@ -4,12 +4,13 @@
     <title>Shorty</title>
   </head>
   <body>
-     <input type="text" name="" value="">
+     <input type="text" name="" value="" id="urlField">
      <button type="button" name="button" id="subButton">Shorten</button>
      <script>
       document.getElementById("subButton").addEventListener("click", test);
        function test() {
-         console.log("in test");
+         var url = document.getElementById("urlField").value;
+         console.log(url);
        }
      </script>
   </body>
