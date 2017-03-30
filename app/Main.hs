@@ -7,17 +7,22 @@ import Web.Scotty (scotty
                   , middleware)
 import System.Environment (getEnv)
 import Database
+import System.FilePath.Posix ((</>))
 
 -- dev logger
 devLogger :: ScottyM ()
 devLogger = middleware logStdoutDev
 
+getTemplatePath :: FilePath -> FilePath
+getTemplatePath docRoot = docRoot </> "templates"
+
 main :: IO ()
 main = do
+  docRoot <- getEnv "DOCUMENT_ROOT"
   port <- read <$> getEnv "SHORTY_PORT"
   redisHost <- getEnv "REDIS_HOST"
   redisPort <- getEnv "REDIS_PORT"
   rConn <- getDBConnection $ connectionInfo redisHost redisPort
   scotty port $ do
     devLogger
-    routes rConn
+    routes rConn $ getTemplatePath docRoot
