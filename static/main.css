@@ -65,3 +65,10 @@ input[type="text"]
   font-weight:bold;
   color: rgba(128, 0, 0, 0.8);
 }
+
+error-style {
+  font-size: 250px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 11%;
+}
