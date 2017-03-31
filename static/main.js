@@ -41,5 +41,6 @@ function shortenUrl() {
 function urlForm() {
   document.getElementById("urlField").value = "";
   document.getElementById("urlForm").className = "display";
+  document.getElementById("urlForm").className += " url-form-style"
   document.getElementById("shortUrl").className = "hide";
 }
