@@ -46,8 +46,8 @@ serveMain :: FilePath -> ScottyM ()
 serveMain tPath = get "/" $ file (tPath </> "index.html")
 
 -- redirect short codes
-redirectURL :: R.Connection -> ScottyM ()
-redirectURL conn =  get "/:code" $ do
+redirectURL :: R.Connection -> FilePath -> ScottyM ()
+redirectURL conn tPath =  get "/:code" $ do
   code <- param "code"
   eitherURL <- liftIO (getURL conn code)
   case eitherURL of
@@ -56,7 +56,7 @@ redirectURL conn =  get "/:code" $ do
     Right maybeURL -> case maybeURL of
       Nothing -> do
         status status404
-        html "Invalid URL : Not Found"
+        file (tPath </> "404.html")
       Just url -> do
         status status301
         addHeader  "Location" (bsToText url)
@@ -98,9 +98,9 @@ allOtherRoutes :: ScottyM ()
 allOtherRoutes = notFound $ do
   html "Not Found"
 
-routes :: R.Connection -> String -> ScottyM ()
+routes :: R.Connection -> FilePath -> ScottyM ()
 routes conn templatePath = do
   serveMain templatePath
-  redirectURL conn
+  redirectURL conn templatePath
   shortenURL conn
   allOtherRoutes
