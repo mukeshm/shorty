@@ -73,10 +73,11 @@ input[type="text"]
 }
 
 .error-style {
+  font-family: sans-serif;
   font-size: 250px;
   text-align: center;
-  vertical-align: middle;
-  margin: 11%;
+  margin: 0;
+  padding-top: 12%;
 }
 
 .short-url-class2 {
