@@ -33,14 +33,15 @@ function shortenUrl() {
       if (err) alert(err.errorText)
       else document.getElementById("shortenedUrl").innerHTML = resData.shortURL
     })
-    document.getElementById("urlForm").className = "hide";
     document.getElementById("shortUrl").className = "display";
+    document.getElementById("body-id").className = "body-class";
   }
 }
 
 function urlForm() {
   document.getElementById("urlField").value = "";
   document.getElementById("urlForm").className = "display";
-  document.getElementById("urlForm").className += " url-form-style"
+  document.getElementById("urlForm").className += " url-form-style";
   document.getElementById("shortUrl").className = "hide";
+  document.getElementById("body-id").className = "";
 }
