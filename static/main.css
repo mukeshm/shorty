@@ -15,7 +15,7 @@ html {
 }
 
 .url-form-style {
-  height: 30%;
+  height: 27%;
   background-color: rgba(128, 0, 0, 0.8);
   padding-left: 25%;
   padding-top: 2%;
@@ -36,7 +36,7 @@ html {
 .url-form-input {
   width: 60vw;
   padding-top: 1%;
-  padding-bottom: 5%;
+  padding-bottom: 4%;
 }
 
 input[type="text"]
