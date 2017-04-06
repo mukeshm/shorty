@@ -48,27 +48,27 @@ input[type="text"]
 }
 
 .url-form-button {
-  display:inline-block;
-  padding:6px 12px;
-  margin-bottom:0;
-  font-size:14px;
-  font-weight:400;
-  line-height:1.42857143;
-  text-align:center;
-  white-space:nowrap;
-  vertical-align:middle;
-  -ms-touch-action:manipulation;
-  touch-action:manipulation;
-  cursor:pointer;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  background-image:none;
-  border:1px solid transparent;
-  border-radius:4px;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
   background-color: rgba(255,255,0, 0.6);
-  font-weight:bold;
+  font-weight: bold;
   color: rgba(128, 0, 0, 0.8);
 }
 
@@ -116,27 +116,27 @@ body {
 }
 
 .close-button {
-  display:inline-block;
-  padding:4px 8px;
+  display: inline-block;
+  padding: 4px 8px;
   margin-top: 1%;
   margin-bottom: 1%;
-  font-size:14px;
-  font-weight:400;
-  line-height:1.42857143;
-  text-align:center;
-  white-space:nowrap;
-  vertical-align:middle;
-  -ms-touch-action:manipulation;
-  touch-action:manipulation;
-  cursor:pointer;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  background-image:none;
-  border:1px solid transparent;
-  border-radius:4px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
   color: rgba(255,255,0, 0.8);
-  font-weight:bold;
+  font-weight: bold;
   background-color: rgba(128, 0, 0, 0.8);
 }
