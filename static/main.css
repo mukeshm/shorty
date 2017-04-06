@@ -73,11 +73,23 @@ input[type="text"]
 }
 
 .error-style {
-  font-family: sans-serif;
-  font-size: 250px;
+  width: 50vw;
+  height: 100vh;
   text-align: center;
+  font-family: sans-serif;
+  font-size: 14vw;
+  float: left;
   margin: 0;
-  padding-top: 12%;
+}
+
+.error-style p {
+  margin-top: 30vh;
+}
+
+img {
+  width: 43vw;
+  margin-top: 15vh;
+  float: left;
 }
 
 .short-url-class2 {
