@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 .display {
   display: block!important
 }
@@ -13,11 +17,13 @@
 .url-form-style {
   height: 30%;
   background-color: rgba(128, 0, 0, 0.8);
-  margin-top: 17%;
   padding-left: 25%;
   padding-top: 2%;
   padding-bottom: 2%;
   font-family: sans-serif;
+  position: fixed;
+  top: 31%;
+  width: 100%;
 }
 
 .url-form-label {
@@ -71,4 +77,35 @@ input[type="text"]
   text-align: center;
   vertical-align: middle;
   margin: 11%;
+}
+
+.short-url-class2 {
+  background-color: white;
+  width: 50%;
+  height: 20%;
+  position: absolute;
+  top: 37%;
+  text-align: center;
+  left: 25%;
+}
+
+.short-url-class2 p {
+  background-color: lightgrey;
+  width: 90%;
+  text-align: center;
+  margin-left: 5%;
+  margin-top: 7%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.body-class {
+  background-color: hsla(0,0%,0%,0.54);
+}
+
+.short-url-class1 {
+  display: none;
 }
