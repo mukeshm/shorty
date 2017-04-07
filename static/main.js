@@ -34,7 +34,7 @@ function shortenUrl() {
       else document.getElementById("shortenedUrl").innerHTML = resData.shortURL
     })
     document.getElementById("shortUrl").className = "display";
-    document.getElementById("body-id").className = "body-class";
+    document.getElementById("body-id").className += " body-class";
   }
 }
 
@@ -43,5 +43,5 @@ function urlForm() {
   document.getElementById("urlForm").className = "display";
   document.getElementById("urlForm").className += " url-form-style";
   document.getElementById("shortUrl").className = "hide";
-  document.getElementById("body-id").className = "";
+  document.getElementById("body-id").className = "body-style";
 }
