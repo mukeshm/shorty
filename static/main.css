@@ -196,4 +196,22 @@ body {
     border-radius: 6px;
   }
 
+  .short-url-class2 p {
+    font-size: 40px;
+  }
+
+  .short-url-class2 {
+    width: 80%;
+    height: 230px;
+    position: absolute;
+    top: 35.5%;
+    left: 10%;
+    border-radius: 8px;
+  }
+
+  .close-button {
+    padding: 8px 16px;
+    font-size: 30px;
+    border-radius: 6px;
+  }
 }
