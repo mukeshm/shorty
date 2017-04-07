@@ -156,3 +156,44 @@ body {
   font-weight: bold;
   background-color: rgba(128, 0, 0, 0.8);
 }
+
+@media only screen and (max-width: 457px) {
+  .url-form-label {
+    font-size: 25px;
+  }
+}
+
+@media only screen and (max-device-width: 567px) {
+  .url-form-style {
+    height: 400px;
+    padding-left: 11vw;
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+
+  .url-form-label {
+    font-size: 60px;
+  }
+
+  .url-form-input {
+    width: 60vw;
+    padding-top: 20px;
+    padding-bottom: 90px;
+  }
+
+  input[type="text"]
+  {
+      width: 80vw;
+      height: 4vh;
+      font-size: 40px;
+      padding: 15px;
+      border-radius: 6px;
+  }
+
+  .url-form-button {
+    padding: 8px 16px;
+    font-size: 30px;
+    border-radius: 6px;
+  }
+
+}
