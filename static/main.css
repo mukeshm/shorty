@@ -17,7 +17,7 @@ html {
 .url-form-style {
   height: 27%;
   background-color: rgba(128, 0, 0, 0.8);
-  padding-left: 25%;
+  padding-left: 23vw;
   padding-top: 2%;
   padding-bottom: 2%;
   font-family: sans-serif;
@@ -41,6 +41,7 @@ html {
 
 input[type="text"]
 {
+    width: 50vw;
     font-size:14px;
     padding: 8px;
     border:1px solid transparent;
@@ -112,6 +113,7 @@ img {
   margin-left: 4%;
   margin-top: 5%;
   padding: 8px 8px;
+  word-wrap: break-word;
 }
 
 body {
